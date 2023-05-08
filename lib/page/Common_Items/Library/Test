@@ -1,0 +1,120 @@
+Widget showPeriod(int a) {
+  return Scaffold(
+    appBar: new AppBar(
+      title: new Text(
+        "Hajar",
+        style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w900),
+      ),
+      backgroundColor: Colors.blue[800],
+      actions: <Widget>[
+        new Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: Icon(Icons.exit_to_app)),
+      ],
+    ),
+    drawer: new AppDrawer(),
+    body: MyPageBody(),
+  );
+}
+
+
+class MyPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new Text(
+                "Period #$a",
+                style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.w400),
+              )
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new Container(
+                child: Text(
+                  "<time>",
+                  style: TextStyle(color: Colors.white),
+                ),
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(30.0)),
+                  color: Colors.grey,
+                ),
+                padding: new EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+              ),
+              SizedBox(width: 10.0),
+              new Container(
+                child: Text(
+                  "<Class>",
+                  style: TextStyle(color: Colors.white),
+                ),
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(30.0)),
+                  color: Colors.grey,
+                ),
+                padding: new EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+              ),
+            ],
+          ),
+          new Padding(
+              padding: EdgeInsets.only(left: 10.0, top: 10.0),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  new Container(
+                    child: Text(
+                      "An imaginary subject.",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    decoration: new BoxDecoration(
+                      borderRadius:
+                          new BorderRadius.all(new Radius.circular(30.0)),
+                      color: Colors.grey,
+                    ),
+                    padding: new EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: 40.0,
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new RaisedButton(
+                child: const Text('GO!'),
+                color: Colors.redAccent,
+                elevation: 4.0,
+                splashColor: Colors.red,
+                onPressed: () {
+                  // Perform some action
+                  Navigator.of(context).pushNamed(TakeAttendance.tag);
+                  //Navigator.push(context,takeAttendance());
+                },
+              ),
+              new RaisedButton(
+                child: const Text('Cancel'),
+                color: Colors.blueAccent,
+                elevation: 4.0,
+                splashColor: Colors.blue[200],
+                onPressed: () {
+                  // Perform some action
+                  //Navigator.pop(context);
+                },
+              ),
+            ],
+          )
+        ]);
+  }
+}

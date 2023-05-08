@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Log-in/screens/Splash-Screen.dart';
+import 'package:responsive_dashboard/Log-in/screens/home-screen.dart';
+import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/main.dart';
+import 'package:responsive_dashboard/page/Common_Items/Attendance%20Report.dart';
+import 'package:responsive_dashboard/page/Common_Items/Attendance.dart';
+import 'package:responsive_dashboard/page/Common_Items/DataSheet_master.dart';
+import 'package:responsive_dashboard/page/Common_Items/Visitation%20Report.dart';
+import 'package:responsive_dashboard/component/List Builder.dart';
+import 'package:responsive_dashboard/pallete.dart';
+import 'package:responsive_dashboard/style/style.dart';
+
+Widget build(BuildContext context) => MaterialApp(
+      title: 'Common_Items',
+      color: AppColor.whiteHK,
+      theme: ThemeData(
+          primarySwatch: Colors.blue, scaffoldBackgroundColor: Colors.white),
+      home: Common_Items(),
+    );
+
+class Common_Items extends StatefulWidget {
+  @override
+  State<Common_Items> createState() => _Common_ItemsState();
+}
+
+class _Common_ItemsState extends State<Common_Items> {
+  @override
+  Widget build(BuildContext context) {
+    return initWidget();
+  }
+
+  initWidget() {
+    return MaterialApp(
+        home: Scaffold(
+            backgroundColor: AppColor.whiteHK,
+            body: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        child: Row(children: [
+                      ListTile(
+                        leading: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => MyApp()));
+                            },
+                        title: Text(
+                          "",
+                          style: TextStyle(
+                              color: AppColor.midGreyHk,
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text(
+                          "Brief decription about the page",
+                        ),
+                      ),
+                )])]
+                Container(
+
+                    height: 50,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        color: AppColor.greenHK,
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 24,
+                            color: Color.fromARGB(255, 199, 199, 199),
+                          )
+                        ]),
+                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                      ListView(children: <Widget>[
+                        Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                        BuildList(
+                          icon: Icons.data_saver_off_sharp,
+                          title: "Data Sheet Master",
+                          desc: "Brief Description",
+                          onClicked: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DataSheet(),
+                          )),
+                        ),
+                        BuildList(
+                          icon: Icons.people_alt_rounded,
+                          title: "Attendance",
+                          desc: "Brief Description",
+                          onClicked: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                          desc: "Brief Description",
+                          onClicked: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => attendanceReport(),
+                          )),
+                        ),
+                        BuildList(
+                          icon: Icons.person_pin_circle,
+                          title: "Visitation Report",
+                          desc: "Brief Description",
+                          onClicked: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => visitationReport(),
+                          )),
+                        ),
+                      ])      builder: (context) => attendance(),
+                          )),
+                        ),
+                        BuildList(
+                          icon: Icons.people_alt_rounded,
+                          title: "Attendance Report",
+                      
+                    ),
+                  ),
+    ))));
+  }
+}

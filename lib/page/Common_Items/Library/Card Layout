@@ -1,0 +1,32 @@
+
+Container(
+            height: 230,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(50),
+              ),
+              color: AppColor.greenHK,
+            ),
+            child: Stack(children: [
+              Positioned(
+                  top: 80,
+                  left: 0,
+                  child: Container(
+                    height: 100,
+                    width: 300,
+                    decoration: BoxDecoration(
+                        color: AppColor.whiteHK,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            bottomRight: Radius.circular(50))),
+                  )),
+
+              Positioned(
+                  top: 110,
+                  left: 20,
+                  child: Text("Common Items",
+                      style: TextStyle(
+                          color: AppColor.midGreyHk,
+                          fontFamily: 'Poppins',
+                          fontSize: 25,
+                          fontWeight: FontWeight.w900))),
