@@ -27,7 +27,7 @@ Future<void> makePayBillPayment(String businessShortCode, String passKey, String
     "Content-Type": "application/json"
   };
 
-  var response = await http.post(url, body: body, headers: headers);
+  var response = await http.post(url as Uri, body: body, headers: headers);
   
   if (response.statusCode == 200) {
     // Payment request successful, parse response JSON and handle accordingly

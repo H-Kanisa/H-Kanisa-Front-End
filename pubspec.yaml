@@ -25,10 +25,10 @@ dependencies:
   flutter:
     sdk: flutter 
   date_format: ^2.0.6
-  http: ^0.12.2
-  intl: ^0.15.7
-  dropdown_button2: ^1.6.3
-  syncfusion_flutter_datagrid: ^18.3.35-bet
+  http: ^0.13.6
+  intl: ^0.18.1
+  dropdown_button2: ^2.1.0
+  syncfusion_flutter_datagrid: ^21.2.4
   js: ^0.6.2
   expansion_card: ^0.1.0
   animations: ^2.0.7
@@ -38,12 +38,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   fluentui_icons: ^1.0.0
   google_nav_bar: ^5.0.6
-  flutter_svg: ^0.22.0
-  provider: ^5.0.0
+  flutter_svg: ^2.0.5
+  provider: ^6.0.5
   salomon_bottom_bar: ^3.3.1
   firestore_ui: ^1.25.1
-  firebase_dart: ^0.7.15+4
-  mysql1: ^0.17.1
+  firebase_dart: ^1.0.9
+  mysql1: ^0.20.0
+  firebase_core: ^2.11.0
+  get: ^4.6.5
+  cloud_firestore: ^4.6.0
 
 dev_dependencies:
   flutter_test:

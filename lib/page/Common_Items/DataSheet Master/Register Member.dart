@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mysql1/mysql1.dart';
 import 'package:responsive_dashboard/component/Form/FormBirthday.dart';
 import 'package:responsive_dashboard/component/Form/FormText.dart';
 import 'package:responsive_dashboard/component/constants/List.dart';
@@ -15,52 +15,51 @@ class regMember extends StatefulWidget {
 }
 
 class _regMemberState extends State<regMember> {
-  /*
- $first','$middle','$last','$phone','$birthday',
- '$cell','$zone','$church','$branch','$location');
-  */
-  final _formKey = GlobalKey<FormState>();
+  final _firstname = TextEditingController();
+  final _middlename = TextEditingController();
+  final _lastname = TextEditingController();
+  final _zone = TextEditingController();
+  final _church = TextEditingController();
+  final _phoneNumber = TextEditingController();
+  final _loveGroup = TextEditingController();
+  final _branch = TextEditingController();
+  final _birthday = TextEditingController();
 
-  String _firstName;
-  String _middleName;
-  String _lastName;
-  String _phoneNumber;
-  String _birthday;
-  String _loveGroup;
-  String _zone;
-  String _church;
-  String _branch;
-  String _location;
+  // Future<void> regMember() async {
+  //   final firstName = _firstname.text.trim();
+  //   final middleName = _middlename.text.trim();
+  //   final lastname = _lastname.text.trim();
+  //   final phoneNumber = _phoneNumber.text.trim();
+  //   final birthday = _birthday.text.trim();
+  //   final loveGroup = _loveGroup.text.trim();
+  //   final zone = _zone.text.trim();
+  //   final church = _church.text.trim();
+  //   final branch = _branch.text.trim();
 
-  Future<void> _submitForm() async {
-    final settings = ConnectionSettings(
-      host: 'localhost',
-      port: 3306,
-      user: 'root',
-      password: '',
-      db: 'h-kanisa',
-    );
+  //   await FirebaseFirestore.instance.collection('members').add({
+  //     "firstname": firstName,
+  //     "middlename": middleName,
+  //     "lastname": lastname,
+  //     "phoneNumber": phoneNumber,
+  //     "birthday": birthday,
+  //     "loveGroup": loveGroup,
+  //     "zone": zone,
+  //     "church": church,
+  //     "branch": branch,
+  //   });
 
-    final conn = await MySqlConnection.connect(settings);
+  //   // Clear the text fields after successful submission
+  //   _firstname.clear();
+  //   _middlename.clear();
+  //   _lastname.clear();
+  //   _phoneNumber.clear();
+  //   _birthday.clear();
+  //   _loveGroup.clear();
+  //   _zone.clear();
+  //   _church.clear();
+  //   _branch.clear();
+  // }
 
-    await conn.query(
-      'INSERT INTO member_registration (FName, MName, LName, Phone_Number, DOB, Love_Group, Zone, Church, Branch, City) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [
-        _firstName,
-        _middleName,
-        _lastName,
-        _phoneNumber,
-        _birthday,
-        _loveGroup,
-        _zone,
-        _church,
-        _branch,
-        _location,
-      ],
-    );
-
-    await conn.close();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,32 +70,51 @@ class _regMemberState extends State<regMember> {
           child: Column(
             children: [
               Container(
-                  alignment: Alignment.bottomLeft,
-                  child: FormTitle(
-                      title: "Register Member",
-                      onClicked: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DataSheet(),
-                        ));
-                      })),
+                alignment: Alignment.bottomLeft,
+                child: FormTitle(
+                  title: "Register Member",
+                  onClicked: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DataSheet(),
+                    ));
+                  },
+                ),
+              ),
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    FormText(text: "First Name"),
-                    FormText(text: "Middle Name"),
-                    FormText(text: "Last Name"),
-                    FormText(text: "Phone Number"),
-                    FormBirthday(text: "Birthday"),
-                    FormDropDown(text: "Cell"),
-                    FormDropDown(text: "Zone"),
-                    FormDropDown(text: "Church"),
-                    FormDropDown(text: "Branch"),
+                    FormText(text: "First Name", controller: _firstname),
+                    FormText(text: "Middle Name", controller: _middlename),
+                    FormText(text: "Last Name", controller: _lastname),
+                    FormText(text: "Phone Number", controller: _phoneNumber),
+                    FormBirthday(text: "Birthday", controller: _birthday),
+                    FormDropDown(
+                        text: "Cell", list: cell, controller: _loveGroup),
+                    FormDropDown(text: "Zone", list: zone, controller: _zone),
+                    FormDropDown(
+                        text: "Church", list: church, controller: _church),
+                    FormDropDown(
+                        text: "Branch", list: branch, controller: _branch),
                     FormText(text: "Location"),
                     FormButton(
-                        text: "Submit",
-                        action: () {
-                        _submitForm();
-                        })
+                      text: "Submit",
+                      action: () {
+                        //creates a firestore collection reference
+                        CollectionReference collRef =
+                            FirebaseFirestore.instance.collection('members');
+                        collRef.add({
+                          "firstname": _firstname.text,
+                          "middlename": _middlename.text,
+                          "lastname": _lastname.text,
+                          "phoneNumber": _phoneNumber.text,
+                          "birthday": _birthday.text,
+                          "loveGroup": _loveGroup.text,
+                          "zone": _zone.text,
+                          "church": _church.text,
+                          "branch": _branch.text,
+                        });
+                      },
+                    ),
                   ],
                 ),
               )
@@ -104,7 +122,7 @@ class _regMemberState extends State<regMember> {
           ),
         ),
       ),
-         bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: BottomNav(),
     );
   }
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "686576703436",
+    "project_id": "hkanisa-33c44",
+    "storage_bucket": "hkanisa-33c44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686576703436:android:20c06272d8c11100ceef69",
+        "android_client_info": {
+          "package_name": "com.example.hkanisa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686576703436-jkkomblhbr2q7sdj4b5e753hl9j4h9em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDn0lOSL8UFx9ukIanlRgMRZ1Yj0WNlJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686576703436-jkkomblhbr2q7sdj4b5e753hl9j4h9em.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "686576703436-kgo7qnhtv01jgvgla77eudquq4cm0moj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hkanisa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -75,11 +75,7 @@ Widget FormDropDown({
               )),
         ),
         isExpanded: true,
-        buttonHeight: 60,
-        buttonPadding: const EdgeInsets.only(left: 0, right: 10),
-        dropdownDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-        ),
+       
         items: list
             .map((item) => DropdownMenuItem<String>(
                   value: item,

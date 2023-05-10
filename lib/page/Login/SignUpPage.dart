@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_dart/auth.dart';
 import 'package:flutter/material.dart';
 import '../../component/Form/CustomButton.dart';
+import '../../feature/UserModel.dart';
 import '../../style/pallete.dart';
 import 'LogInPage.dart';
 
@@ -15,6 +18,44 @@ class StartState extends State<SignUp> {
   bool _obscureText = true;
 
   String _password;
+  final _username= TextEditingController();
+  final _email = TextEditingController();
+  final _passWord = TextEditingController();
+
+  Future SignUp() async {
+    if (passwordConfirmed()) {
+      //Create user
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _email.text.trim(),
+        password: _passWord.text.trim()
+      );
+
+    //Add User details
+
+    }
+  }
+
+  Future addUserDetails (String username, String password, String email) async {
+    await FirebaseFirestore.instance.collection('UserData').add({
+      'username': username,
+      'email': email,
+      'password': password
+    });
+  
+  addUserDetails(
+    _username.text.trim(),
+    _email.text.trim(),
+    _passWord.text.trim()
+  );
+  }
+
+
+  void dispose() {
+    _email.dispose();
+    _passWord.dispose();
+  }
+
+  passwordConfirmed() {}
 
   void _toggle() {
     setState(() {
@@ -68,7 +109,6 @@ class StartState extends State<SignUp> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColor.whiteHK,
-
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60)),
@@ -90,17 +130,22 @@ class StartState extends State<SignUp> {
                               color: AppColor.scaffoldColor,
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            //User Name
+                            //
+                            ///
+                            ///
+                            ///
+
                             child: Container(
                               height: 45,
                               width: 420,
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(),
                               child: TextField(
+                                controller: _email,
                                 style: TextStyle(color: AppColor.greyHK),
                                 cursorColor: AppColor.greenHK,
                                 decoration: InputDecoration(
-                                    hintText: "Email or User Name",
+                                    hintText: "Email",
                                     hintStyle: Theme.of(context)
                                         .textTheme
                                         .caption
@@ -122,7 +167,6 @@ class StartState extends State<SignUp> {
                           ),
                           //Password
                           Container(
-
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(left: 20, right: 20),
                             padding: EdgeInsets.only(left: 20, right: 20),
@@ -137,9 +181,16 @@ class StartState extends State<SignUp> {
                                     height: 45,
                                     width: 420,
                                     padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                       ),
+                                    decoration: BoxDecoration(),
+
+                                    //////
+                                    ///
+                                    ///
+                                    ///
+                                    ///
+                                    ///Password
                                     child: TextFormField(
+                                      controller: _passWord,
                                       decoration: InputDecoration(
                                           focusColor: AppColor.greenHK,
                                           border: InputBorder.none,
@@ -190,8 +241,7 @@ class StartState extends State<SignUp> {
                               children: <Widget>[
                                 Container(
                                   padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                     ),
+                                  decoration: BoxDecoration(),
                                   child: TextField(
                                     decoration: InputDecoration(
                                         suffixIcon: IconButton(
@@ -232,14 +282,14 @@ class StartState extends State<SignUp> {
                             height: 40,
                           ),
                           //Sign Up button
-                      Container(
-                          height: 45,
-                          width: 420,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(60),
-                              color: AppColor.greenHK),
-                        child: Center(
-                            child: Text(
+                          Container(
+                            height: 45,
+                            width: 420,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(60),
+                                color: AppColor.greenHK),
+                            child: Center(
+                                child: Text(
                               "Login",
                               style: TextStyle(
                                   color: AppColor.whiteHK,
@@ -281,11 +331,12 @@ class StartState extends State<SignUp> {
                                     ),
                                     onTap: () {
                                       // Write Tap Code Here.
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Login(),
-                                          ));
+SignUp();
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //       builder: (context) => Login(),
+                                      //     ));
                                     },
                                   )
                                 ],
