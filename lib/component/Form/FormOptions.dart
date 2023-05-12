@@ -1,107 +1,121 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import '../../style/pallete.dart';
 
-abstract class formDropDown extends StatelessWidget {
+class FormDropDown extends StatefulWidget {
+  final String text;
+  final TextEditingController controller;
+  final String hint;
+  final IconData prefix;
+  final List<String> list;
+  final VoidCallback onClicked;
+
+  const FormDropDown({
+    Key key,
+    @required this.text,
+    @required this.controller,
+    @required this.hint,
+    @required this.prefix,
+    @required this.list,
+    @required this.onClicked, String label,
+  }) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(primaryColor: AppColor.whiteHK),
-    );
-  }
+  _FormDropDownState createState() => _FormDropDownState();
 }
 
-Widget FormDropDown({
-   String text,
-   TextEditingController controller,
-   String hint,
-   IconData prefix,
-   List list,
-   VoidCallback onClicked,
-}) {
-  return Column(
-    children: [
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          text,
-          textAlign: TextAlign.start,
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
+class _FormDropDownState extends State<FormDropDown> {
+  String _selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            widget.text,
+            textAlign: TextAlign.start,
+            textDirection: TextDirection.ltr,
+            style: TextStyle(
               fontSize: 14,
               color: AppColor.greyHK,
               fontFamily: "Poppins",
-              fontWeight: FontWeight.w400),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         ),
-      ),
-      Padding(padding: EdgeInsets.symmetric(vertical: 3)),
-      DropdownButtonFormField2(
-        style: TextStyle(
+        Padding(padding: EdgeInsets.symmetric(vertical: 3)),
+        DropdownButtonFormField<String>(
+          style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 14,
             color: AppColor.midGreyHk,
-            fontWeight: FontWeight.w300),
-        decoration: InputDecoration(
-          //Add isDense true and zero Padding.
-          //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-          isDense: true,
-          hintText: "   Select $text",
-          hintStyle: TextStyle(
+            fontWeight: FontWeight.w300,
+          ),
+          decoration: InputDecoration(
+            isDense: true,
+            hintText: "   Select ${widget.text}",
+            hintStyle: TextStyle(
               fontSize: 14,
               color: AppColor.offWhiteHK,
               fontFamily: "Poppins",
-              fontWeight: FontWeight.w100),
-          focusColor: AppColor.midGreyHk,
-          //prefixIcon: Icon(prefix, color: AppColor.midGreyHk),
-
-          ////
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide.none,
-          ),
-
-          contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(
+              fontWeight: FontWeight.w100,
+            ),
+            border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: BorderSide.none),
-
-          fillColor: Color.fromARGB(64, 236, 236, 236),
-          filled: true,
-          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide(
                 color: AppColor.greenHK,
                 width: 2,
-              )),
-        ),
-        isExpanded: true,
-       
-        items: list
-            .map((item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: const TextStyle(
-                      fontSize: 14,
+              ),
+            ),
+            filled: true,
+            fillColor: Color.fromARGB(64, 236, 236, 236),
+            contentPadding: EdgeInsets.only(left: 10, right: 0, top: 10, bottom: 10),
+          ),
+          isExpanded: true,
+          iconSize: 30,
+          iconEnabledColor: AppColor.midGreyHk,
+          value: _selectedValue,
+          onChanged: (value) {
+            setState(() {
+              _selectedValue = value;
+              widget.controller.text = value;
+            });
+            if (widget.onClicked != null) {
+              widget.onClicked();
+            }
+          },
+          items: widget.list
+              .map((item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w300,
+                        color: AppColor.midGreyHk,
+                      ),
                     ),
-                  ),
-                ))
-            .toList(),
-
-        // ignore: missing_return
-        validator: (value) {
-          if (value == null) {
-            return 'Please select gender.';
-          }
-        },
-        onChanged: (value) {
-          //Do something when changing the item if you want.
-        },
-        onSaved: (value) {
-
-        },
-      ),
-      Padding(padding: EdgeInsets.symmetric(vertical: 7))
-    ],
-  );
+                  ))
+              .toList(),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please select a value';
+            }
+            return null;
+          },
+        ),
+        Padding(padding: EdgeInsets.symmetric(vertical: 7)),
+      ],
+    );
+  }
 }

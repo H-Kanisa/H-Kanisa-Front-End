@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/page/Common_Items/Attendance.dart';
 import 'package:responsive_dashboard/page/dashboard.dart';
 import 'package:responsive_dashboard/style/pallete.dart';
+import '../../../component/Form/FormText.dart';
 import '../../../component/appbars/BottomNav.dart';
 import '../../../component/appbars/CustomAppBar.dart';
+import '../../../component/cards/expandable.dart';
 
 Widget build(BuildContext context) => MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -28,7 +30,15 @@ class cellAttendance extends StatelessWidget {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => attendance()));
           }),
-      bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: BottomNav(),body: SingleChildScrollView(
+             child: Column(
+               children: [
+                 FormText(text: 'Service type'),
+                 FormText(text: 'Date'),
+                // Expandable()
+               ],
+             )
+            ),
     );
   }
 }

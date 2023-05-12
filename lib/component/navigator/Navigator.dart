@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../page/Common_Items/Attendance/Cell Attendance.dart';
 import '../../page/Common_Items/DataSheet Master/Register Member.dart';
 import '../../page/Common_Items/DataSheet Master/View Members.dart';
 import '../../page/Dashboard/M-Pesa.dart';
 import '../../page/Dashboard/ManageUser.dart';
-import '../../page/Onboarding/splash_view.dart';
 import '../../page/dashboard.dart';
 
 class Navigation {
@@ -25,7 +25,7 @@ class Navigation {
       case registerMember:
         return MaterialPageRoute(builder: (_) => regMember());
       case attendanceReport:
-        return MaterialPageRoute(builder: (_) => SplashView());
+        return MaterialPageRoute(builder: (_) => cellAttendance());
       case viewMember:
         return MaterialPageRoute(builder: (_) => viewMembers());
       case manageUser:
