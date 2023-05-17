@@ -6,11 +6,11 @@ import 'package:responsive_dashboard/page/Setup/Add%20Cell%20Group.dart';
 import 'package:responsive_dashboard/page/Setup/Add%20College.dart';
 import 'package:responsive_dashboard/page/Setup/Add%20Department.dart';
 import 'package:responsive_dashboard/page/Setup/Add%20Project.dart';
-import 'package:responsive_dashboard/page/Setup/Add%20Service%20Type.dart';
 import 'package:responsive_dashboard/page/Setup/Add%20Zone.dart';
 import 'package:responsive_dashboard/style/pallete.dart';
 import '../component/navigatormenu.dart';
 import 'Dashboard/ManageUser.dart';
+import 'Setup/Add Service Type.dart';
 import 'dashboard.dart';
 
 Widget build(BuildContext context) => MaterialApp(

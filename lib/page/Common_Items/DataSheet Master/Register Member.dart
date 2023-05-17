@@ -21,6 +21,7 @@ class _regMemberState extends State<regMember> {
   final _middlename = TextEditingController();
   final _lastname = TextEditingController();
   final _zone = TextEditingController();
+  final _gender = TextEditingController();
   final _church = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _loveGroup = TextEditingController();
@@ -31,19 +32,32 @@ class _regMemberState extends State<regMember> {
     if (_formKey.currentState.validate()) {
       // Save the form data to Firestore
       await FirebaseFirestore.instance.collection('members').add({
-        'firstname': _firstname.text,
-        'middlename': _middlename.text,
-        'lastname': _lastname.text,
-        'phoneNumber': _phoneNumber.text,
-        'birthday': _birthday.text,
-        'loveGroup': _loveGroup.text,
-        'zone': _zone.text,
-        'church': _church.text,
-        'branch': _branch.text,
-        'selectedCell': _loveGroup.text,
-        'selectedZone': _zone.text,
-        'selectedChurch': _church.text,
-        'selectedBranch': _branch.text,
+       // 'Code': 'ABC123',
+      'Church': _church.text,
+      'FName': _firstname.text,
+      'MName': _middlename.text,
+      'LName': _lastname.text,
+      'Phone_Number': _phoneNumber.text,
+      'DOB': Timestamp.fromDate(DateTime(1990, 1, 1)),
+      'Gender': _gender.text,
+      'Department': 'Example Department',
+      'Love_Group': _loveGroup.text,
+      'College': 'Example College',
+      'Zone': _zone.text,
+      'Branch': _branch.text,
+      // 'address': '123 Example St',
+      // 'Street': 'Example Street',
+      // 'City': 'Example City',
+      // 'State': 'Example State',
+      // 'Country': 'Example Country',
+      // 'Member_Level': 'Member',
+      // 'Minister_in_Charge': 'Example Minister',
+      // 'Active_Account': 'YES',
+      'DateAdded': FieldValue.serverTimestamp(),
+      'Added_By': 'Example User',
+      'Date_Added': '2022-10-14',
+      'Time_Added': '15:00:00',
+      'Discharged': 'NO'
       });
 
       // Reset the form
@@ -103,6 +117,7 @@ class _regMemberState extends State<regMember> {
     _lastname.dispose();
     _phoneNumber.dispose();
     _birthday.dispose();
+    _gender.dispose();
     _loveGroup.dispose();
     _zone.dispose();
     _church.dispose();
@@ -139,7 +154,8 @@ class _regMemberState extends State<regMember> {
                       FormText(text: "Middle Name", controller: _middlename),
                       FormText(text: "Last Name", controller: _lastname),
                       FormText(text: "Phone Number", controller: _phoneNumber),
-                      FormBirthday(text: "Birthday", controller: _birthday),
+                      FormDropDown(text: 'Gender', controller: _gender, list: genderItems),
+                  FormBirthday(text: 'Birthday', ),
                       FormDropDown(
                           text: "Cell", list: cell, controller: _loveGroup),
                       FormDropDown(text: "Zone", list: zone, controller: _zone),
@@ -147,7 +163,7 @@ class _regMemberState extends State<regMember> {
                           text: "Church", list: church, controller: _church),
                       FormDropDown(
                           text: "Branch", list: branch, controller: _branch),
-                      FormText(text: "Location"),
+                      // FormText(text: "Location"),
                       FormButton(
                         text: "Submit",
                         action: _regMember,

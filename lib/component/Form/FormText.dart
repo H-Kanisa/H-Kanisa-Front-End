@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../style/pallete.dart';
 
-class FormText extends StatelessWidget {
+class FormText extends StatefulWidget {
   final String text;
   final String hint;
   final TextEditingController controller;
@@ -22,13 +22,18 @@ class FormText extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<FormText> createState() => _FormTextState();
+}
+
+class _FormTextState extends State<FormText> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            text,
+            widget.text,
             textAlign: TextAlign.start,
             textDirection: TextDirection.ltr,
             style: TextStyle(
@@ -42,12 +47,12 @@ class FormText extends StatelessWidget {
         Padding(padding: EdgeInsets.symmetric(vertical: 3)),
         TextFormField(
           maxLines: 3,
-          controller: controller,
+          controller: widget.controller,
           cursorColor: AppColor.greenHK,
           minLines: 1,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter $text';
+              return 'Please enter ${widget.text}';
             }
             return null;
           },
@@ -58,7 +63,7 @@ class FormText extends StatelessWidget {
             fontWeight: FontWeight.w300,
           ),
           decoration: InputDecoration(
-            hintText: "Enter $text",
+            hintText: "Enter ${widget.text}",
             hintStyle: TextStyle(
               fontSize: 14,
               color: AppColor.offWhiteHK,
@@ -66,7 +71,7 @@ class FormText extends StatelessWidget {
               fontWeight: FontWeight.w100,
             ),
             focusColor: AppColor.midGreyHk,
-            suffixIcon: Icon(suffix, color: AppColor.midGreyHk),
+            suffixIcon: Icon(widget.suffix, color: AppColor.midGreyHk),
             isDense: true,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),

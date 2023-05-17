@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../style/pallete.dart';
 
 class buildList extends StatelessWidget {
@@ -27,7 +26,7 @@ Widget BuildList({
       borderRadius: BorderRadius.circular(15),
       child: Center(
         child: Container(
-            height: 60,
+            height: 68,
             child: ListTile(
                 dense: true,
                 leading: Transform.translate(

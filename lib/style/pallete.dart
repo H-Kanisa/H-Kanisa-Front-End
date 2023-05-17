@@ -25,16 +25,15 @@ class AppColor {
   static const Color whiteHK = Color.fromRGBO(255, 255, 255, 1);
   static const Color greenHK = Color(0xFF94C13D);
   static const Color blueHK = Color.fromRGBO(58, 63, 149, 1);
-  static const Color greyHK = Color.fromRGBO(51, 51, 51, 1);
+  static const Color greyHK = Color(0xFF4C4C4C);
   static const Color redHK = Color(0xFFE9232A);
   static const Color greenSubtleHK =Color(0xFFDDFF9A);
-  static const Color blueSubtleHK = Color.fromRGBO(
-      25, 63, 149, 0.2549019607843137);
-  static const Color greySubtleHK = Color.fromRGBO(25, 51, 51, 1);
+  static Color get blueSubtleHK => Colors.blue.shade50;
+  static const Color greySubtleHK =Color(0xFF4C4C4C);
   static const Color redSubtleHK = Color.fromARGB(19, 233, 35, 42);
   static const Color offWhiteHK = Color.fromARGB(255, 189, 189, 189);
   static const Color midGreyHk = Color(0xFF808080);
   static const Color scaffoldColor = Color.fromARGB(255, 242, 242, 242);
-  static const Color textGreyHK = Color(0xFF3A3A3A);
+  static const Color textGreyHK = Color(0xFF4C4C4C);
   static const Color lightGreyHk = Color(0xFFEAEAEA);
 }
