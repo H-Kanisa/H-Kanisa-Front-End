@@ -39,10 +39,7 @@ class regVisitor extends StatelessWidget {
                     FormText(text: "Last Name"),
                     FormText(text: "Phone Number"),
                     FormBirthday(text: "Birthday"),
-                    FormDropDown(text: "Cell", list: cell),
-                    FormDropDown(text: "Zone", list: zone),
-                    FormDropDown(text: "Church", list: church),
-                    FormDropDown(text: "Branch", list: branch),
+                  
                     FormText(text: "Location"),
                     FormButton(text: "Submit", action: () {})
                   ],

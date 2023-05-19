@@ -17,13 +17,38 @@ class addCell extends StatefulWidget {
 class _addCellState extends State<addCell> {
   final _formKey = GlobalKey<FormState>();
   final _Cell = TextEditingController();
+  TextEditingController _zone = TextEditingController();
+  TextEditingController _cell = TextEditingController();
+  String _selectedZone;
+  Future<List<String>> _fetchZones() async {
+    final querySnapshot =
+        await FirebaseFirestore.instance.collection('zones').get();
+    final zones = querySnapshot.docs.map((doc) {
+      final data = doc.data();
+      if (data.containsKey('Zone')) {
+        return data['Zone'] as String;
+      } else {
+        // Handle the case when the 'Zone' field is missing
+        return 'N/A';
+      }
+    }).toList();
+    return zones;
+  }
 
+  
+  @override
+  void dispose() {
+    _zone.dispose();
+    super.dispose();
+  }
+
+  //Function to add cell
   void _addCell() async {
     if (_formKey.currentState.validate()) {
       // Save the form data to Firestore
-      await FirebaseFirestore.instance.collection('cell').add({
-        
+      await FirebaseFirestore.instance.collection('cells').add({
         'Cell': _Cell.text,
+        'Zone': _zone.text,
       });
 
       // Reset the form
@@ -68,12 +93,6 @@ class _addCellState extends State<addCell> {
     }
   }
 
-  @override
-  void dispose() {
-    _Cell.dispose();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -96,11 +115,97 @@ class _addCellState extends State<addCell> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        FormText(text: "Cell", controller: _Cell,),
-                        FormButton(
-                          text: 'Add',
-                          action: _addCell
-                        )
+                        FormText(
+                          text: "Cell",
+                          controller: _Cell,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Zone',
+                            textAlign: TextAlign.start,
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColor.greyHK,
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.symmetric(vertical: 3)),
+                        FutureBuilder<List<String>>(
+                          future: _fetchZones(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              final zones = snapshot.data;
+                              return DropdownButtonFormField<String>(
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  color: AppColor.midGreyHk,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: "Select Zone",
+                                  hintStyle: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColor.offWhiteHK,
+                                    fontFamily: "Poppins",
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                      color: AppColor.greenHK,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: Color.fromARGB(64, 236, 236, 236),
+                                  contentPadding: EdgeInsets.only(
+                                      left: 10, right: 0, top: 10, bottom: 10),
+                                ),
+                                isExpanded: true,
+                                iconSize: 30,
+                                iconEnabledColor: AppColor.midGreyHk,
+                                value: _selectedZone,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedZone = value;
+                                  });
+                                },
+                                items: zones.map((zone) {
+                                  return DropdownMenuItem<String>(
+                                    value: zone,
+                                    child: Text(zone),
+                                  );
+                                }).toList(),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please select a value';
+                                  }
+                                  return null;
+                                },
+                              );
+                            }
+                          },
+                        ),
+                        FormButton(text: 'Add', action: _addCell)
                       ],
                     ),
                   ),

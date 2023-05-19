@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/form/CustomButton.dart';
 import 'package:responsive_dashboard/component/Form/FormText.dart';
+import '../../component/Form/FormOptions copy.dart';
 import '../../component/Form/FormTitle.dart';
 import '../../component/appbars/BottomNav.dart';
 import '../../style/pallete.dart';
@@ -16,14 +17,14 @@ class addCollege extends StatefulWidget {
 
 class _addCollegeState extends State<addCollege> {
   final _formKey = GlobalKey<FormState>();
-  final _Department = TextEditingController();
+  final _Colleges = TextEditingController();
 
   void _addCollege() async {
     if (_formKey.currentState.validate()) {
       // Save the form data to Firestore
       await FirebaseFirestore.instance.collection('colleges').add({
         
-        'College': _Department.text,
+        'College': _Colleges.text,
       });
 
       // Reset the form
@@ -31,7 +32,7 @@ class _addCollegeState extends State<addCollege> {
 
       // Create a string with the form data
       String formData = 'Form submitted successfully\n'
-          'College: ${_Department.text}\n';
+          'College: ${_Colleges.text}\n';
 
       showModalBottomSheet(
         context: context,
@@ -70,7 +71,7 @@ class _addCollegeState extends State<addCollege> {
 
   @override
   void dispose() {
-    _Department.dispose();
+    _Colleges.dispose();
     super.dispose();
   }
 
@@ -96,7 +97,7 @@ class _addCollegeState extends State<addCollege> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        FormText(text: "College", controller: _Department,),
+                        FormOption(text: "College", collection: "colleges", controller: _Colleges,),
                         FormButton(
                           text: 'Add',
                           action: _addCollege

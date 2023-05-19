@@ -4,6 +4,7 @@ import 'package:responsive_dashboard/component/form/CustomButton.dart';
 import 'package:responsive_dashboard/component/Form/FormText.dart';
 import '../../component/Form/FormTitle.dart';
 import '../../component/appbars/BottomNav.dart';
+import '../../component/bottomSheet.dart';
 import '../../style/pallete.dart';
 import '../Setup_Page.dart';
 
@@ -33,38 +34,7 @@ class _addDepartmentState extends State<addDepartment> {
       String formData = 'Form submitted successfully\n'
           'Department: ${_Department.text}\n';
 
-      showModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-        ),
-        builder: (BuildContext context) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  formData,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 14,
-                    color: AppColor.greyHK,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+     CustomSnack(text: formData,key: _formKey,);
     }
   }
 

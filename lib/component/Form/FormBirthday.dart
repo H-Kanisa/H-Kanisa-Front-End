@@ -1,16 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../style/pallete.dart';
+
 class FormBirthday extends StatefulWidget {
-   final String text;
+  final String text;
   final String hint;
   final TextEditingController controller;
   final IconData prefix;
   final IconData suffix;
   final VoidCallback onClicked;
   final String label;
- const FormBirthday({
+
+  const FormBirthday({
     Key key,
     this.text,
     this.hint,
@@ -20,6 +23,7 @@ class FormBirthday extends StatefulWidget {
     this.onClicked,
     this.label,
   }) : super(key: key);
+
   @override
   State<FormBirthday> createState() => _FormBirthdayState();
 }
@@ -33,19 +37,44 @@ class _FormBirthdayState extends State<FormBirthday> {
       builder: (BuildContext context) {
         return Container(
           height: 300,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.dateAndTime,
-            initialDateTime: selectedDate ?? DateTime.now(),
-            onDateTimeChanged: (DateTime newDateTime) {
-              final monthDay = DateTime(
-                DateTime.now().year,
-                newDateTime.month,
-                newDateTime.day,
-              );
-              setState(() {
-                selectedDate = monthDay;
-              });
-            },
+          color: Colors.white.withOpacity(0.9),
+          child: Column(
+            children: [
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.dateAndTime,
+                  initialDateTime: selectedDate ?? DateTime.now(),
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    final monthDay = DateTime(
+                      DateTime.now().year,
+                      newDateTime.month,
+                      newDateTime.day,
+                    );
+                    setState(() {
+                      selectedDate = monthDay;
+                    });
+                  },
+                ),
+              ),
+              CupertinoButton(
+                child: Text('Save'),
+                onPressed: () async {
+                  if (selectedDate != null) {
+                    final formattedDate =
+                        selectedDate.toIso8601String().substring(0, 10);
+                    widget.controller.text = formattedDate;
+
+                    // Save the selected date to Firestore
+                    await FirebaseFirestore.instance
+                        .collection('your_collection_name')
+                        .add({
+                      'Date': selectedDate,
+                    });
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           ),
         );
       },

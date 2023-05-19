@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cupertino_date_textbox/cupertino_date_textbox.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/Form/FormBirthday.dart';
 import 'package:responsive_dashboard/component/Form/FormText.dart';
 import 'package:responsive_dashboard/component/constants/List.dart';
 import '../../../component/Form/CustomButton.dart';
+import '../../../component/Form/FormOptions copy.dart';
 import '../../../component/Form/FormOptions.dart';
 import '../../../component/Form/FormTitle.dart';
 import '../../../component/appbars/BottomNav.dart';
@@ -26,38 +28,40 @@ class _regMemberState extends State<regMember> {
   final _phoneNumber = TextEditingController();
   final _loveGroup = TextEditingController();
   final _branch = TextEditingController();
+  final _department = TextEditingController();
+  final _college = TextEditingController();
   final _birthday = TextEditingController();
 
   void _regMember() async {
     if (_formKey.currentState.validate()) {
       // Save the form data to Firestore
-      await FirebaseFirestore.instance.collection('members').add({
-       // 'Code': 'ABC123',
-      'Church': _church.text,
-      'FName': _firstname.text,
-      'MName': _middlename.text,
-      'LName': _lastname.text,
-      'Phone_Number': _phoneNumber.text,
-      'DOB': Timestamp.fromDate(DateTime(1990, 1, 1)),
-      'Gender': _gender.text,
-      'Department': 'Example Department',
-      'Love_Group': _loveGroup.text,
-      'College': 'Example College',
-      'Zone': _zone.text,
-      'Branch': _branch.text,
-      // 'address': '123 Example St',
-      // 'Street': 'Example Street',
-      // 'City': 'Example City',
-      // 'State': 'Example State',
-      // 'Country': 'Example Country',
-      // 'Member_Level': 'Member',
-      // 'Minister_in_Charge': 'Example Minister',
-      // 'Active_Account': 'YES',
-      'DateAdded': FieldValue.serverTimestamp(),
-      'Added_By': 'Example User',
-      'Date_Added': '2022-10-14',
-      'Time_Added': '15:00:00',
-      'Discharged': 'NO'
+      await FirebaseFirestore.instance.collection('member_registration').add({
+        // 'Code': 'ABC123',
+        'Church': _church.text,
+        'FName': _firstname.text,
+        'MName': _middlename.text,
+        'LName': _lastname.text,
+        'Phone_Number': _phoneNumber.text,
+        'DOB': DateTime.parse(_birthday.text),
+        'Gender': _gender.text,
+        'Department': _department.text,
+        'Love_Group': _loveGroup.text,
+        // 'College': _college.text,
+        'Zone': _zone.text,
+        'Branch': _branch.text,
+        // 'address': '123 Example St',
+        // 'Street': 'Example Street',
+        // 'City': 'Example City',
+        // 'State': 'Example State',
+        // 'Country': 'Example Country',
+        // 'Member_Level': 'Member',
+        // 'Minister_in_Charge': 'Example Minister',
+        // 'Active_Account': 'YES',
+        // 'DateAdded': FieldValue.serverTimestamp(),
+        // 'Added_By': 'Example User',
+        // 'Date_Added': '2022-10-14',
+        // 'Time_Added': '15:00:00',
+        // 'Discharged': 'NO'
       });
 
       // Reset the form
@@ -71,6 +75,7 @@ class _regMemberState extends State<regMember> {
           'Phone Number: ${_phoneNumber.text}\n'
           'Birthday: ${_birthday.text}\n'
           'Cell: ${_loveGroup.text}\n'
+          'Department: ${_department}\n'
           'Zone: ${_zone.text}\n'
           'Church: ${_church.text}\n'
           'Branch: ${_branch.text}';
@@ -116,6 +121,7 @@ class _regMemberState extends State<regMember> {
     _middlename.dispose();
     _lastname.dispose();
     _phoneNumber.dispose();
+    _department.dispose();
     _birthday.dispose();
     _gender.dispose();
     _loveGroup.dispose();
@@ -130,7 +136,7 @@ class _regMemberState extends State<regMember> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-                 padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
           child: Column(
             children: [
@@ -154,15 +160,40 @@ class _regMemberState extends State<regMember> {
                       FormText(text: "Middle Name", controller: _middlename),
                       FormText(text: "Last Name", controller: _lastname),
                       FormText(text: "Phone Number", controller: _phoneNumber),
-                      FormDropDown(text: 'Gender', controller: _gender, list: genderItems),
-                  FormBirthday(text: 'Birthday', ),
                       FormDropDown(
-                          text: "Cell", list: cell, controller: _loveGroup),
-                      FormDropDown(text: "Zone", list: zone, controller: _zone),
-                      FormDropDown(
-                          text: "Church", list: church, controller: _church),
-                      FormDropDown(
-                          text: "Branch", list: branch, controller: _branch),
+                        text: 'Gender',
+                        controller: _gender,
+                        list: genderItems,
+                      ),
+                      FormBirthday(
+                        text: 'Birthday',
+                        controller: _birthday,
+                      ),
+                      FormOption(
+                        text: "Department",
+                        controller: _department,
+                        collection: 'departments',
+                      ),
+                      FormOption(
+                        text: "Cell",
+                        controller: _loveGroup,
+                        collection: 'cells',
+                      ),
+                      FormOption(
+                        text: "Zone",
+                        controller: _zone,
+                        collection: 'zones',
+                      ),
+                      FormOption(
+                        text: "Church",
+                        controller: _church,
+                        collection: 'churches',
+                      ),
+                      FormOption(
+                        text: "Branch",
+                        controller: _branch,
+                        collection: 'branches',
+                      ),
                       // FormText(text: "Location"),
                       FormButton(
                         text: "Submit",

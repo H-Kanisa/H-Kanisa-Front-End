@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/form/CustomButton.dart';
 import 'package:responsive_dashboard/component/Form/FormText.dart';
+import '../../component/Form/FormOptions copy.dart';
 import '../../component/Form/FormTitle.dart';
 import '../../component/appbars/BottomNav.dart';
 import '../../style/pallete.dart';
@@ -96,7 +97,7 @@ class _addBranchState extends State<addBranch> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        FormText(text: "Branch", controller: _Branch,),
+                        FormOption(text: "Branch", controller: _Branch,collection: 'branches',),
                         FormButton(
                           text: 'Add',
                           action: _addBranch

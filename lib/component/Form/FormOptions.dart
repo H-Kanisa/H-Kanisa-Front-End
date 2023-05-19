@@ -54,7 +54,7 @@ class _FormDropDownState extends State<FormDropDown> {
           ),
           decoration: InputDecoration(
             isDense: true,
-            hintText: "   Select ${widget.text}",
+            hintText: " Select ${widget.text}",
             hintStyle: TextStyle(
               fontSize: 14,
               color: AppColor.offWhiteHK,

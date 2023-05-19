@@ -26,6 +26,7 @@ class FormText extends StatefulWidget {
 }
 
 class _FormTextState extends State<FormText> {
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,6 +47,7 @@ class _FormTextState extends State<FormText> {
         ),
         Padding(padding: EdgeInsets.symmetric(vertical: 3)),
         TextFormField(
+          
           maxLines: 3,
           controller: widget.controller,
           cursorColor: AppColor.greenHK,
@@ -79,6 +81,7 @@ class _FormTextState extends State<FormText> {
             ),
             fillColor: Color.fromARGB(64, 236, 236, 236),
             filled: true,
+          
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide(
